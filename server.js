@@ -4,43 +4,38 @@ const cors = require("cors");
 const app = express();
 app.use(cors());
 
-// Home route
 app.get("/", (req, res) => {
   res.send("KUBER99999 BACKEND LIVE");
 });
 
-// Signal route
 app.get("/signal", (req, res) => {
+  const price = Math.floor(20000 + Math.random() * 1000);
 
-  // ✅ ALWAYS DEFINE PRICE FIRST
-  let price = Math.floor(20000 + Math.random() * 1000);
+  let signal, entry, sl, target, confidence;
+  const random = Math.random();
 
-  let signal = "WAIT";
-  let entry = "-";
-  let sl = "-";
-  let target = "-";
-  let confidence = "50%";
-
-  let random = Math.random();
-
-  if (random < 0.4) {
+  if (random < 0.45) {
     signal = "BUY NIFTY CE";
     entry = price;
     sl = price - 50;
     target = price + 100;
     confidence = "80%";
-
-  } else if (random < 0.8) {
+  } else if (random < 0.90) {
     signal = "SELL NIFTY PE";
     entry = price;
     sl = price + 50;
     target = price - 100;
     confidence = "75%";
+  } else {
+    signal = "WAIT";
+    entry = "-";
+    sl = "-";
+    target = "-";
+    confidence = "50%";
   }
 
   res.json({ price, signal, entry, sl, target, confidence });
 });
 
-// Port
 const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => console.log("Running on", PORT));
